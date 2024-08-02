@@ -1,11 +1,17 @@
-﻿<?xml version="1.0" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Application Title="MealsApp">
   <BOModel>
     <Class Name="DevExpress.Persistent.BaseImpl.PermissionPolicy.PermissionPolicyUser" Caption="Base User" />
+    <Class Name="MealsApp.Module.BusinessObjects.Department" DefaultDetailViewImage="BODepartment_32x32" />
+    <Class Name="MealsApp.Module.BusinessObjects.Profile" DefaultDetailViewImage="BOPerson_32x32" />
+    <Class Name="MealsApp.Module.BusinessObjects.Telephone" DefaultDetailViewImage="BO_Phone_32x32" />
   </BOModel>
   <Options>
     <LayoutManagerOptions RequiredFieldMark="*" />
   </Options>
+  <SchemaModules>
+    <SchemaModule Name="SystemModule" Version="24.1.4.0" IsNewNode="True" />
+  </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
   </Views>

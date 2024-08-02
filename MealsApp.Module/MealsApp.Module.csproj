@@ -38,7 +38,7 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
-   <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="24.1.4" />
+    <PackageReference Include="DevExpress.ExpressApp.CodeAnalysis" Version="24.1.4" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v24.1">
@@ -141,6 +141,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\Department.cs" />
+    <Compile Include="BusinessObjects\Enums\TelephoneType.cs" />
+    <Compile Include="BusinessObjects\Meals.cs" />
+    <Compile Include="BusinessObjects\Profile.cs" />
+    <Compile Include="BusinessObjects\Telephone.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="BusinessObjects\ApplicationUser.cs" />
     <Compile Include="BusinessObjects\ApplicationUserLoginInfo.cs" />
@@ -154,6 +159,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BusinessObjects\ReadMe.txt" />
@@ -165,6 +171,10 @@
   <ItemGroup>
     <None Include="Welcome.html" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Department.jpg" />
+    <Content Include="Images\Meals.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -174,4 +184,3 @@
   </Target>
   -->
 </Project>
-

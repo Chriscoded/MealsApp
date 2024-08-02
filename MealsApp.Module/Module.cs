@@ -23,6 +23,9 @@ namespace MealsApp.Module {
     public sealed partial class MealsAppModule : ModuleBase {
         public MealsAppModule() {
             InitializeComponent();
+
+            // Register the images from the Images folder
+            
         }
         public override IEnumerable<ModuleUpdater> GetModuleUpdaters(IObjectSpace objectSpace, Version versionFromDB) {
             ModuleUpdater updater = new DatabaseUpdate.Updater(objectSpace, versionFromDB);
