@@ -144,6 +144,8 @@
     <Compile Include="BusinessObjects\Department.cs" />
     <Compile Include="BusinessObjects\Enums\TelephoneType.cs" />
     <Compile Include="BusinessObjects\Meals.cs" />
+    <Compile Include="BusinessObjects\OrderLines.cs" />
+    <Compile Include="BusinessObjects\Orders.cs" />
     <Compile Include="BusinessObjects\Profile.cs" />
     <Compile Include="BusinessObjects\Telephone.cs" />
     <Compile Include="DatabaseUpdate\Updater.cs" />

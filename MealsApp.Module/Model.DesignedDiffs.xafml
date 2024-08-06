@@ -14,5 +14,6 @@
   </SchemaModules>
   <Views>
     <ListView Id="ApplicationUser_ListView" Caption="Users" />
+    <ListView Id="Orders_ListView" Filter="" ShowFindPanel="False" />
   </Views>
 </Application>

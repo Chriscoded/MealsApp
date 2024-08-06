@@ -6,6 +6,7 @@ using DevExpress.Persistent.Base;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.Xpo;
+using MealsApp.Module.BusinessObjects.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,6 +15,9 @@ using System.Text;
 
 namespace MealsApp.Module.BusinessObjects
 {
+
+    public enum TitleOfCourt { Mr, Mrs, Miss, Ms, Dr};
+
     [DefaultClassOptions]
     [ImageName("BO_Contact")]
     [DefaultProperty("Profile")]
@@ -28,22 +32,25 @@ namespace MealsApp.Module.BusinessObjects
             : base(session)
         {
         }
+
+        private bool suppressValidation;
         public override void AfterConstruction()
         {
             base.AfterConstruction();
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
-        private string _Title;
+        private TitleOfCourt _Title;
         private string _Initials;
         private string _Surname;
         private string _Email;
         private Department _Department;
         private int? _Building_Number;
         private int? _Floor;
+        private string _DepartmentManager;
 
         [XafDisplayName("Title"), ToolTip("Individual Title")]
-        [Persistent("Title"), RuleRequiredField(DefaultContexts.Save)]
-        public string Title
+        [Persistent("Title")]
+        public TitleOfCourt Title
         {
             get { return _Title; }
             set { SetPropertyValue(nameof(Title), ref _Title, value); }
@@ -75,6 +82,7 @@ namespace MealsApp.Module.BusinessObjects
         }
         [XafDisplayName("Department"), ToolTip("Department individual belongs to")]
         [Persistent("Department"), RuleRequiredField(DefaultContexts.Save)]
+        [Association("Department-Profiles")]
         public Department Department
         {
             get { return _Department; }
@@ -108,13 +116,73 @@ namespace MealsApp.Module.BusinessObjects
         }
 
         // Custom validation rule to ensure at least one telephone number exists
-        [RuleFromBoolProperty("AtLeastOneTelephoneNumberRule", DefaultContexts.Save, "At least one telephone number is required")]
-        public bool AtLeastOneTelephoneNumber
+        //[RuleFromBoolProperty("AtLeastOneTelephoneNumberRule", DefaultContexts.Save, "At least one telephone number is required")]
+        //[VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
+        //public bool AtLeastOneTelephoneNumber
+        //{
+        //    get
+        //    {
+        //        if (suppressValidation)
+        //        {
+        //            suppressValidation = false;
+        //            return true;
+        //        }
+        //        return Telephone != null && Telephone.Count > 0;
+        //    }
+        //}
+
+        [XafDisplayName("Department Manager"), ToolTip("Department individual belongs to")]
+        [NonPersistent]
+        [ModelDefault("AllowEdit", "False")]
+        [ModelDefault("EditMask", "")]
+        [VisibleInListView(true), VisibleInDetailView(true), VisibleInLookupListView(false)]
+
+        public string DepartmentManager
         {
-            get { return Telephone != null && Telephone.Count > 0; }
+            get { return _DepartmentManager; }
+            set {
+                _DepartmentManager = Department?.Manager ?? string.Empty;
+            }
+
         }
 
+        public static Profile CreateProfile(Session session, TitleOfCourt title, string initials, string surname, string email, Department dept, int? building_Number, int floor)
+        {
+            var profile = new Profile(session)
+            {
+                suppressValidation = true,
+                Title = title,
+                Initials = initials,
+                Surname = surname,
+                Email = email,
+                Department = dept,
+                Building_Number = building_Number,
+                Floor = floor,
 
+
+            };
+
+            // Save the profile without validation
+            profile.Save();
+            session.CommitTransaction();
+
+            // Add a telephone number (example)
+            var telephone = new Telephone(session)
+            {
+                TelephoneNumber = "123-456-78908",
+                TelephoneType = TelephoneType.H,
+                Profile = profile
+            };
+            telephone.Save();
+            session.CommitTransaction();
+
+            // Re-enable validation and save again
+            profile.suppressValidation = false;
+            profile.Save();
+            session.CommitTransaction();
+
+            return profile;
+        }
 
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]

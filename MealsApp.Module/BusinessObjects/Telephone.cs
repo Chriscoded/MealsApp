@@ -32,6 +32,7 @@ namespace MealsApp.Module.BusinessObjects
         public override void AfterConstruction()
         {
             base.AfterConstruction();
+            DateCreated = DateTime.Now;
             // Place your initialization code here (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument112834.aspx).
         }
         private TelephoneType _TelephoneType;
@@ -48,7 +49,7 @@ namespace MealsApp.Module.BusinessObjects
         }
 
         [XafDisplayName("Telephone Number"), ToolTip("Telephone Number")]
-        [ModelDefault("EditMask", "(000) 000-0000"), Index(0), VisibleInListView(true)]
+        [ModelDefault("EditMask", "(000) 000-00000"), Index(0), VisibleInListView(true)]
 
         [Persistent("TelephoneNumber"), RuleRequiredField(DefaultContexts.Save)]
         public string TelephoneNumber
@@ -67,6 +68,7 @@ namespace MealsApp.Module.BusinessObjects
 
         [XafDisplayName("Date Created"), ToolTip("Date Created")]
         [Persistent("DateCreated"), RuleRequiredField(DefaultContexts.Save)]
+        [ModelDefault("AllowEdit", "False")]
         public DateTime DateCreated
         {
             get { return _DateCreated; }

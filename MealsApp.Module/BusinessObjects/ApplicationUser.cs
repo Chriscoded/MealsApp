@@ -20,6 +20,13 @@ namespace MealsApp.Module.BusinessObjects {
             get { return GetCollection<ApplicationUserLoginInfo>(nameof(LoginInfo)); }
         }
 
+        [Association("ApplicationUser-CreatedOrders")]
+        public XPCollection<Orders> CreatedOrders => GetCollection<Orders>(nameof(CreatedOrders));
+
+        [Association("ApplicationUser-UpdatedOrders")]
+        public XPCollection<Orders> UpdatedOrders => GetCollection<Orders>(nameof(UpdatedOrders));
+
+
         IEnumerable<ISecurityUserLoginInfo> IOAuthSecurityUser.UserLogins => LoginInfo.OfType<ISecurityUserLoginInfo>();
 
         ISecurityUserLoginInfo ISecurityUserWithLoginInfo.CreateUserLoginInfo(string loginProviderName, string providerUserKey) {

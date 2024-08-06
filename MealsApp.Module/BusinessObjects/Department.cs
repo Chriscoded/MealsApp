@@ -52,6 +52,12 @@ namespace MealsApp.Module.BusinessObjects
             set { SetPropertyValue(nameof(Manager), ref _Manager, value); }
         }
 
+        [Association("Department-Profiles")]
+        public XPCollection<Profile> Profile
+        {
+            get { return GetCollection<Profile>(nameof(Profile)); }
+        }
+
 
         //[Action(Caption = "My UI Action", ConfirmationMessage = "Are you sure?", ImageName = "Attention", AutoCommit = true)]
         //public void ActionMethod() {
